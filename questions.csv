@@ -1,6 +1,6 @@
 Question,Correct Answer Index,Choices
-What is 1 + 1?,2,A) 3 - B) 4 - C) 2 - D) 1
-What is the capital of Italy?,0,A) Rome - B) Paris - C) Venice
-What is the capital of China?,2,A) Guanzhou - B) Shanghai - C) Beijing
-What is the capital of Norway?,1,A) Copenhagen - B) Oslo - C) Moscow
-What is the capital of Thailand?,0,A) Bangkok - B) Bankok - C) Bangok
+What is 1 + 1?,2,A) 3;;;B) 4;;;C) 2;;;D) 1
+What is the capital of Italy?,0,A) Rome;;;B) Paris;;;C) Venice
+What is the capital of China?,2,A) Guanzhou;;;B) Shanghai;;;C) Beijing
+What is the capital of Norway?,1,A) Copenhagen;;;B) Oslo;;;C) Moscow
+What is the capital of Thailand?,0,A) Bangkok;;;B) Bankok;;;C) Bangok
