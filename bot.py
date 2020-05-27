@@ -35,10 +35,14 @@ client = discord.Client()
 quizNumber = 0
 current_answer = None
 questions = read_questions()
+users_playing = {}
 
 
 async def finish_quiz(channel):
 	await channel.send("Thanks for playing!")
+
+	players = sorted(((value, key.name) for key, value in users_playing.items()), reverse=True)
+	await channel.send("\n".join([f"{player[1]}\t{player[0]}" for player in players]))
 
 
 async def start_game(channel):
@@ -50,7 +54,6 @@ async def start_game(channel):
 
 
 async def load_question(channel):
-	global quizNumber
 	global current_answer
 
 	try:
@@ -58,6 +61,7 @@ async def load_question(channel):
 	except IndexError:  # no more questions
 		await finish_quiz(channel)  # end game
 	else:
+		await channel.send(f"Question #{quizNumber+1} out of {len(questions)}")
 		await channel.send(question_tuple[0])  # send the question
 		choices = ""
 		for answer_choice in question_tuple[1]:
@@ -81,10 +85,23 @@ async def on_message(message):
 	elif message.content.startswith(current_answer[:2]):  # user does not have to enter full answer, only A), B), etc.
 		await message.channel.send("Correct!")
 		quizNumber += 1
+
+		correct_user = message.author  # get the user who answered correctly
+		if correct_user in users_playing.keys():  # if the answer is already in the database
+			users_playing[correct_user] += 1  # increase the user's score
+		else:
+			users_playing[correct_user] = 1  # start tracking user score
+
 		await load_question(message.channel)
 
 	elif len(message.content) == 2 and message.content[1] == ")":
 		await message.channel.send("Incorrect!")
+
+		incorrect_user = message.author  # get the user who answered correctly
+		if incorrect_user in users_playing.keys():  # if the answer is already in the database
+			users_playing[incorrect_user] -= 1  # decrease the user's score
+		else:
+			users_playing[incorrect_user] = -1  # start tracking user score
 
 	elif message.content.startswith("!quit"):
 		await finish_quiz(message.channel)
