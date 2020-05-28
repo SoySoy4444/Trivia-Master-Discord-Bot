@@ -48,7 +48,9 @@ async def finish_quiz(channel):
 async def start_game(channel):
 	global quizNumber
 	global current_answer
-	quizNumber, current_answer = 0, None
+	global users_playing
+
+	quizNumber, current_answer, users_playing = 0, None, {}
 
 	await channel.send("Starting quiz!")
 
